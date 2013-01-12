@@ -1,0 +1,6 @@
+This package contains a library for timing motion primitives that the pr2 arm could perform. It accomplishes this by recording in programmer-specified intervals how long it takes each joint of the pr2 to move a certain distance. For a given primitive, it is assumed that all of the joints move simultaneously; therefore, the joint that takes the longest to move represents the running time of that motion primitive.
+
+There are two issues with this method:
+Firstly, we are assuming that each joint is starting and stopping at rest, which may not be the case. In the future it would be better to take advantage of the timePath() function in the trajectory_recorder/arm.cpp file and record times for motion primitives that are in motion. In order to do that, some experimentation must be done to find the proper time values to assign the points in a trajectory that would be tested. 
+
+Secondly, this method discretises the distances that a joint can move, and approximates the time that an arbitrary distance would take by interpolating between the nearest two recorded distances.

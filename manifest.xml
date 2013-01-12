@@ -16,6 +16,9 @@
   <depend package="arm_navigation_msgs"/>
   <depend package="tf"/>
   <depend package="pr2_controllers_msgs"/>
+  <export>
+    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -lpr2_timer" />
+  </export>
   <rosdep name="boost" />
 </package>
 
