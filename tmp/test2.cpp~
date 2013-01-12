@@ -1,0 +1,17 @@
+#include <ros/ros.h>
+#include <pr2_controllers_msgs/JointTrajectoryControllerState>
+
+using namespace std;
+
+int main(int argc, char ** argv){
+  int count=0;
+  ros::init(argc, argv, "hznode");
+  pr2_controllers_msgs::JointTrajectoryControllerStateConstPtr state;
+  ros::Time start = ros::Time::now().toSec();
+    while(1){
+      count++;
+      state = ros::topic::waitForMessage("/r_arm_controller/state");
+      ROS_INFO("Hz = %f", (count/(start-ros::Time::now().toSec()));
+    }
+  return 0;
+}

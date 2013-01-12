@@ -1,0 +1,28 @@
+#include <fstream>
+#include "pathTimer.h:"
+pathTimer::pathTimer(){
+}
+
+pathTimer::~pathTimer(){
+}
+
+void pathTimer::parseFile(char * filename){
+  ifstream file(filename);
+  int num_distances, step;
+  vector<double> joint_times;
+  double time;
+  file>>numdistances>>step;
+  for(int i = 1; i <= num_distances;i++){
+    distances.push_back(i*step);
+    for(int j = 0; j < 7; j++){
+      file>>time;
+      joint_times.push_back(time);
+    }
+    distances_times.push_back(joint_times);
+    joint_times.clear();
+  }
+}
+
+double getMotionTime(std::vector<double> &start, std::vector<double> &end){
+  return 0.0;
+}
