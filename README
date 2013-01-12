@@ -8,7 +8,7 @@ primitive.
 
 There are two issues with this method: Firstly, we are assuming that
 each joint is starting and stopping at rest, which may not be the
-case. In the future it would be better to take advantage of the
+case. Because of this, the function tends to overestimate time values. In the future it would be better to take advantage of the
 timePath() function in the trajectory_recorder/arm.cpp file and record
 times for motion primitives that are in motion. In order to do that,
 some experimentation must be done to find the proper time values to

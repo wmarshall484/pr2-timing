@@ -159,7 +159,7 @@ double pr2Timer::getTimeForSingleJoint(double distance, int joint){
     ROS_ERROR("The step used to generate the time file does not have enought granularity to determing the time for joint %d to move %f radians", joint, distance);
   }
   cout<<"Distance is "<< distance<<" and joint is "<<joint<<" and [index] and [index+1] is ["<<combined_joint_times[index][joint]<<"] ["<<combined_joint_times[index+1][joint]<<"] "<<endl;
-  double time = (combined_joint_times[index][joint])+distance*(combined_joint_times[index+1][joint]-combined_joint_times[index][joint])/step;
+  double time = (combined_joint_times[index][joint])+(distance-(index*step))*(combined_joint_times[index+1][joint]-combined_joint_times[index][joint])/step;
   return time;
 }
 

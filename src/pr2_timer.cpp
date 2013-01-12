@@ -99,7 +99,7 @@ void pr2Timer::timeStep(double step, char * filename){
   ofstream file(filename);
   vector<vector<double> > collective_averages;
   for(double primitive = step; primitive < 6.28; primitive+=step){
-    averages = timePrimitive(primitive, &rarm);
+    averages = timePrimitive(primitive);
     collective_averages.push_back(averages);
   }
   file<<collective_averages.size()<<" "<<step<<endl;
