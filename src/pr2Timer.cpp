@@ -70,12 +70,18 @@ vector<double> pr2Timer::timePrimitive(double primitive){
     return averages;
   }
   for(int i = 0; i < 7; i++){
-    double delta0=rarm->min[i];
-    double delta1=delta0+primitive;
     if(primitive<(rarm->max[i]-rarm->min[i])){
-      for(;delta1<rarm->max[i];delta0=delta1, delta1+=primitive){
-	def[i]= delta0; path[i]=delta1;
-	joint_times.push_back(rarm->time(def, path, 0));
+      double delta0=0.0;
+      double delta1=0.0;
+      int count = 0;
+      while(count<100){ /*100 represents the minimum number of tests*/
+	
+	for(delta0=rarm->min[i], delta1=delta0+primitive;delta1<rarm->max[i];delta0=delta1, delta1+=primitive){
+	  def[i]= delta0; path[i]=delta1;
+	  joint_times.push_back(rarm->time(def, path, 0));
+	  count++;
+	}
+	
       }
     }
     else
@@ -105,10 +111,11 @@ void pr2Timer::timeStep(double step, char * filename){
   vector<double> averages;
   ofstream file(filename);
   vector<vector<double> > collective_averages;
+  int num_steps = 6.28/step, count = 0;
   for(double primitive = 0.0; primitive < 6.28; primitive+=step){
     averages = timePrimitive(primitive);
     collective_averages.push_back(averages);
-    cout<<"Collective averages size"<<collective_averages.size()<<endl;
+    cout<<"Collective averages size "<<collective_averages.size()<<" ("<<count<<", "<<num_steps<<") "<<endl;
   }
   file<<collective_averages.size()<<" "<<step<<endl;
   for(int i = 0; i < collective_averages.size();i++){

@@ -57,6 +57,7 @@ void pr2Timer::resetDefAndPath(double def[], double path[]){
   path[6] = 0.0;
 }
 
+
 vector<double> pr2Timer::timePrimitive(double primitive){
   double def[]={0.0,0.0,0.0,-0.15,0.0,0.0,0.0};
   double path[]={0.0,0.0,0.0,-0.15,0.0,0.0,0.0};
@@ -64,12 +65,16 @@ vector<double> pr2Timer::timePrimitive(double primitive){
   vector<vector<double> > collective_times;
   vector<double> averages;
   for(int i = 0; i < 7; i++){
-    double delta0=rarm->min[i];
-    double delta1=delta0+primitive;
     if(primitive<(rarm->max[i]-rarm->min[i])){
-      for(;delta1<rarm->max[i];delta0=delta1, delta1+=primitive){
-	def[i]= delta0; path[i]=delta1;
-	joint_times.push_back(rarm->time(def, path, 0));
+      double delta0=rarm->min[i];
+      double delta1=delta0+primitive;
+      int count = 0;
+      while(count<100){
+	for(;delta1<rarm->max[i];delta0=delta1, delta1+=primitive){
+	  def[i]= delta0; path[i]=delta1;
+	  joint_times.push_back(rarm->time(def, path, 0));
+	  count++;
+	}
       }
     }
     else
